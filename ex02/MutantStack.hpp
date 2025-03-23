@@ -6,7 +6,7 @@
 /*   By: amousaid <amousaid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 04:46:15 by amousaid          #+#    #+#             */
-/*   Updated: 2025/03/21 05:16:08 by amousaid         ###   ########.fr       */
+/*   Updated: 2025/03/22 06:41:04 by amousaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,31 @@
 #include <typeinfo>
 #include <cctype>
 
-class MutantStack
+template <typename M>
+class MutantStack : public std::stack<M>
 {
-	MutantStack();
-	MutantStack(const MutantStack &src);
-	~MutantStack();
-	MutantStack &operator=(const MutantStack &src);
+	public:
+		MutantStack(){};
+		MutantStack(const MutantStack &src)
+		{
+			*this = src;
+		};
+		~MutantStack(){};
+		MutantStack &operator=(const MutantStack &src)
+		{
+			std::stack<M>::operator=(src);
+			return *this;
+		}
+
+		typedef typename std::stack<M>::container_type::iterator iterator;
+
+		iterator begin() {
+			return this->c.begin();
+		}
+
+		iterator end() {
+			return this->c.end();
+		}
 };
 
 #endif
